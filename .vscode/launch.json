@@ -9,7 +9,7 @@
             "program": "${workspaceRoot}\\bin\\Debug\\netcoreapp1.1\\Hello.dll",
             "args": [],
             "cwd": "${workspaceRoot}",
-            "console": "integratedTerminal",
+            "console": "externalTerminal",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart"
         },

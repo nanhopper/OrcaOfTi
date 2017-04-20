@@ -1,8 +1,0 @@
-c:\Users\faboirea\Desktop\Code\Hello\bin\Debug\netcoreapp1.1\Hello.deps.json
-c:\Users\faboirea\Desktop\Code\Hello\bin\Debug\netcoreapp1.1\Hello.runtimeconfig.json
-c:\Users\faboirea\Desktop\Code\Hello\bin\Debug\netcoreapp1.1\Hello.runtimeconfig.dev.json
-c:\Users\faboirea\Desktop\Code\Hello\bin\Debug\netcoreapp1.1\Hello.dll
-c:\Users\faboirea\Desktop\Code\Hello\bin\Debug\netcoreapp1.1\Hello.pdb
-c:\Users\faboirea\Desktop\Code\Hello\obj\Debug\netcoreapp1.1\Hello.AssemblyInfo.cs
-c:\Users\faboirea\Desktop\Code\Hello\obj\Debug\netcoreapp1.1\Hello.dll
-c:\Users\faboirea\Desktop\Code\Hello\obj\Debug\netcoreapp1.1\Hello.pdb
