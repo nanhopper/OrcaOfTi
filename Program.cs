@@ -13,14 +13,15 @@ namespace Hello
         static void Main(string[] args)
         {
             InitMatrix();
-            var matrixUpdated = true;
+            var matrixUpdated = false;
+            WriteMatrix();
             while (true)
             {
-                if (matrixUpdated) WriteMatrix();
                 var key = Console.ReadKey(true);
                 if (key.Key == ConsoleKey.Escape) break;
                 matrixUpdated = UpdateMatrix(key);
             }
+            Console.SetCursorPosition(0, 32);
             Console.WriteLine("Stopped");
             Console.ReadLine();
         }
@@ -33,9 +34,13 @@ namespace Hello
                 if (TryMove(key, out deltaX, out deltaY))
                 {
                     Matrix[PositionY][PositionX] = ' ';
+                    Console.SetCursorPosition(PositionX + 1, PositionY + 1);
+                    Console.Write(' ');
                     PositionX += deltaX;
                     PositionY += deltaY;
                     Matrix[PositionY][PositionX] = 'X';
+                    Console.SetCursorPosition(PositionX + 1, PositionY + 1);
+                    Console.Write('X');
                     return true;
                 }
             }
