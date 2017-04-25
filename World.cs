@@ -2,12 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
+public enum Action
+{
+    None,
+    MoveLeft,
+    MoveRight,
+    MoveUp,
+    MoveDown
+}
+
 public class World
 {
     private readonly View View;
 
     public const int Size = 30;
-    private char[][] Matrix;
+    private Entity[][] Matrix;
     private Player Player;
 
     private Timer Timer;
@@ -20,14 +29,10 @@ public class World
 
     private void Init()
     {
-        Matrix = new char[Size][];
+        Matrix = new Entity[Size][];
         for (int i = 0; i < Size; i++)
         {
-            Matrix[i] = new char[Size];
-            for (int j = 0; j < Size; j++)
-            {
-                Matrix[i][j] = ' ';
-            }
+            Matrix[i] = new Entity[Size];
         }
         Player = new Player(Size/2, Size/2);
         AddEntityToCell(Player);
@@ -38,10 +43,10 @@ public class World
     {
         switch (action)
         {
-            case InputAction.MoveLeft:
-            case InputAction.MoveRight:
-            case InputAction.MoveUp:
-            case InputAction.MoveDown:
+            case InputAction.MovePlayerLeft:
+            case InputAction.MovePlayerRight:
+            case InputAction.MovePlayerUp:
+            case InputAction.MovePlayerDown:
             {
                 int deltaX, deltaY;
                 if (TryMove(action, out deltaX, out deltaY))
@@ -62,10 +67,10 @@ public class World
     {
         deltaX = 0;
         deltaY = 0;
-        if (action == InputAction.MoveDown && Player.Row < (Size-1)) deltaY = 1;
-        if (action == InputAction.MoveUp && Player.Row > 0) deltaY = -1;
-        if (action == InputAction.MoveRight && Player.Column < (Size-1)) deltaX = 1;
-        if (action == InputAction.MoveLeft && Player.Column > 0) deltaX = -1;
+        if (action == InputAction.MovePlayerDown && Player.Row < (Size-1)) deltaY = 1;
+        if (action == InputAction.MovePlayerUp && Player.Row > 0) deltaY = -1;
+        if (action == InputAction.MovePlayerRight && Player.Column < (Size-1)) deltaX = 1;
+        if (action == InputAction.MovePlayerLeft && Player.Column > 0) deltaX = -1;
         return deltaX != 0 || deltaY != 0;
     }
 
@@ -76,17 +81,13 @@ public class World
 
     private void AddEntityToCell(Entity entity)
     {
-        UpdateCell(entity.Column, entity.Row, entity.Char);
+        Matrix[entity.Row][entity.Column] = entity;
+        View.DisplayCell(new Tuple<int, int, char>(entity.Column, entity.Row, entity.Char));
     }
 
     private void RemoveEntityFromCell(Entity entity)
     {
-        UpdateCell(entity.Column, entity.Row, ' ');
-    }
-
-    private void UpdateCell(int column, int row, char c)
-    {
-        Matrix[row][column] = c;
-        View.DisplayCell(new Tuple<int, int, char>(column, row, c));
+        Matrix[entity.Row][entity.Column] = null;
+        View.DisplayCell(new Tuple<int, int, char>(entity.Column, entity.Row, ' '));
     }
 }

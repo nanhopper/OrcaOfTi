@@ -17,4 +17,6 @@ public abstract class Entity
         Column += deltaX;
         Row += deltaY;
     }
+
+    public abstract Action GetNextAction();
 }

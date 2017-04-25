@@ -4,10 +4,10 @@ using System.Collections.Generic;
 public enum InputAction
 {
     None,
-    MoveLeft,
-    MoveRight,
-    MoveUp,
-    MoveDown,
+    MovePlayerLeft,
+    MovePlayerRight,
+    MovePlayerUp,
+    MovePlayerDown,
     Exit
 }
 
@@ -15,10 +15,10 @@ public static class InputManager
 {
     private static readonly Dictionary<ConsoleKey, InputAction> Actions = new Dictionary<ConsoleKey, InputAction>()
     {
-        {ConsoleKey.LeftArrow , InputAction.MoveLeft},
-        {ConsoleKey.RightArrow , InputAction.MoveRight},
-        {ConsoleKey.UpArrow , InputAction.MoveUp},
-        {ConsoleKey.DownArrow , InputAction.MoveDown},
+        {ConsoleKey.LeftArrow , InputAction.MovePlayerLeft},
+        {ConsoleKey.RightArrow , InputAction.MovePlayerRight},
+        {ConsoleKey.UpArrow , InputAction.MovePlayerUp},
+        {ConsoleKey.DownArrow , InputAction.MovePlayerDown},
         {ConsoleKey.Escape , InputAction.Exit}
     };
 

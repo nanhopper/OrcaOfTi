@@ -7,4 +7,9 @@ public class Player : Entity
     }
 
     public override char Char { get { return 'X';}}
+
+    public override Action GetNextAction()
+    {
+        return Action.None;
+    }
 }
