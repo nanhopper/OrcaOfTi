@@ -4,7 +4,8 @@ using System.Linq;
 
 public class View
 {
-    public World World { get; private set;}
+    private readonly World World;
+    private readonly object Sync = new object();
 
     public View()
     {
@@ -52,7 +53,10 @@ public class View
 
     private void DisplayCharAtPos(char c, int left, int top)
     {
-        Console.SetCursorPosition(left, top);
-        Console.Write(c);
+        lock (Sync)
+        {
+            Console.SetCursorPosition(left, top);
+            Console.Write(c);
+        }
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Math;
 
 public class Glob : Entity
 {
