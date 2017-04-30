@@ -16,7 +16,7 @@ public class Glob : Entity
 
     public override char Char { get { return 'O';}}
 
-    public override Action GetNextAction()
+    public override Action GetNextIntendedAction()
     {
         return Actions[Random.Next(4)];
     }

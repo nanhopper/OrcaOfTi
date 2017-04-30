@@ -2,26 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-public enum Action
-{
-    None,
-    MoveLeft,
-    MoveRight,
-    MoveUp,
-    MoveDown
-}
-
 public class World
 {
     private readonly View View;
-
     public const int Size = 30;
     private const double Tick = 0.5;
     private Entity[][] Matrix;
     private Player Player;
     private const int numberOfGlobs = 10;
-    private List<Glob> Globs = new List<Glob>();
-
+    private List<Entity> Entities = new List<Entity>();
     private Timer Timer;
     private static Random Random = new Random();
 
@@ -42,7 +31,7 @@ public class World
         AddEntityToCell(Player);
         for (int i = 0; i < numberOfGlobs; i++)
         {
-            Globs.Add(AddNewGlob());
+            Entities.Add(AddNewGlob());
         }
         Timer = new Timer(OnTimerElapsed, null, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(Tick));
     }
@@ -72,7 +61,7 @@ public class World
             case InputAction.MovePlayerUp:
             case InputAction.MovePlayerDown:
             {
-                ProcessAction(Player, inputAction.ToAction());
+                TryProcessAction(Player, inputAction.ToAction());
                 break;
             }
             case InputAction.None:         
@@ -81,7 +70,7 @@ public class World
         }
     }
 
-    public void ProcessAction(Entity entity, Action action)
+    public bool TryProcessAction(Entity entity, Action action)
     {
         switch (action)
         {
@@ -96,12 +85,13 @@ public class World
                     RemoveEntityFromCell(entity);
                     entity.Move(deltaX, deltaY);
                     AddEntityToCell(entity);
+                    return true;
                 }
-                break;
+                return false;
             }
             case Action.None:         
             default:
-                return;
+                return true;
         }
     }
 
@@ -118,21 +108,18 @@ public class World
 
     private void OnTimerElapsed(object arg)
     {
-        foreach (var glob in Globs)
-        {
-            ProcessAction(glob, glob.GetNextAction());
-        }
+        Entities.ForEach(e => TryProcessAction(e, e.GetNextIntendedAction()));
     }
 
     private void AddEntityToCell(Entity entity)
     {
         Matrix[entity.Row][entity.Column] = entity;
-        View.DisplayCell(new Tuple<int, int, char>(entity.Column, entity.Row, entity.Char));
+        View.DisplayEntity(entity);
     }
 
     private void RemoveEntityFromCell(Entity entity)
     {
         Matrix[entity.Row][entity.Column] = null;
-        View.DisplayCell(new Tuple<int, int, char>(entity.Column, entity.Row, ' '));
+        View.DisplayEntity(entity, true);
     }
 }

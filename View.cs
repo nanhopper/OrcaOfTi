@@ -26,9 +26,9 @@ public class View
         Console.WriteLine("Stopped");
     }
 
-    public void DisplayCell(Tuple<int, int, char> cell)
+    public void DisplayEntity(Entity entity, bool remove = false)
     {
-        DisplayCharAtPos(cell.Item3, cell.Item1 + 1, cell.Item2 + 1);            
+        DisplayCharAtPos(remove ? ' ' : entity.Char, entity.Column + 1, entity.Row + 1);            
     }
 
     private void InitDisplay()
