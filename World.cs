@@ -6,7 +6,7 @@ public class World
 {
     private readonly View View;
     public const int Size = 30;
-    private const double Tick = 0.5;
+    private double Tick = 0.2;
     private Entity[][] Matrix;
     private Player Player;
     private const int numberOfGlobs = 10;
@@ -34,6 +34,7 @@ public class World
             Entities.Add(AddNewGlob());
         }
         Timer = new Timer(OnTimerElapsed, null, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(Tick));
+        View.DisplayTimer(Tick);
     }
 
     private Glob AddNewGlob()
@@ -60,8 +61,23 @@ public class World
             case InputAction.MovePlayerRight:
             case InputAction.MovePlayerUp:
             case InputAction.MovePlayerDown:
+            case InputAction.EatGlob:
             {
                 TryProcessAction(Player, inputAction.ToAction());
+                break;
+            }
+            case InputAction.SlowDown: 
+            {
+                Tick += 0.1;
+                Timer.Change(TimeSpan.FromSeconds(Tick), TimeSpan.FromSeconds(Tick));
+                View.DisplayTimer(Tick);
+                break;
+            }
+            case InputAction.SpeedUp: 
+            {
+                Tick = Math.Max(0, Tick-0.1);
+                Timer.Change(TimeSpan.FromSeconds(Tick), TimeSpan.FromSeconds(Tick));
+                View.DisplayTimer(Tick);
                 break;
             }
             case InputAction.None:         
@@ -89,10 +105,31 @@ public class World
                 }
                 return false;
             }
+            case Action.EatGlob:
+            {
+                Glob glob;
+                if (TryFindGlob(out glob))
+                {
+                    RemoveEntityFromCell(glob);
+                    Entities.Remove(glob);
+                    return true;
+                }
+                return false;
+            }
+          
             case Action.None:         
             default:
                 return true;
         }
+    }
+
+    private bool TryFindGlob(out Glob glob)
+    {
+        glob = Matrix.LeftNeighbor(Player) as Glob
+            ?? Matrix.RightNeighbor(Player) as Glob
+            ?? Matrix.TopNeighbor(Player) as Glob
+            ?? Matrix.BottomNeighbor(Player) as Glob;
+        return glob != null;
     }
 
     private bool TryMove(Entity entity, Action action, out int deltaX, out int deltaY)
@@ -103,7 +140,7 @@ public class World
         if (action == Action.MoveUp && entity.Row > 0) deltaY = -1;
         if (action == Action.MoveRight && entity.Column < (Size-1)) deltaX = 1;
         if (action == Action.MoveLeft && entity.Column > 0) deltaX = -1;
-        return deltaX != 0 || deltaY != 0;
+        return Matrix[entity.Row + deltaY][entity.Column + deltaX] == null && (deltaX != 0 || deltaY != 0);
     }
 
     private void OnTimerElapsed(object arg)

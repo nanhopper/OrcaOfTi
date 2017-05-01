@@ -4,5 +4,6 @@ public enum Action
     MoveLeft,
     MoveRight,
     MoveUp,
-    MoveDown
+    MoveDown,
+    EatGlob
 }

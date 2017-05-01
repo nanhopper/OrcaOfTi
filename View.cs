@@ -59,4 +59,13 @@ public class View
             Console.Write(c);
         }
     }
+
+    internal void DisplayTimer(double tick)
+    {
+        lock (Sync)
+        {
+            Console.SetCursorPosition(0, World.Size + 2);
+            Console.Write("{0:f2}", tick);
+        }
+    }
 }

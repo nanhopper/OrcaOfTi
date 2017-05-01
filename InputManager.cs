@@ -8,6 +8,9 @@ public enum InputAction
     MovePlayerRight,
     MovePlayerUp,
     MovePlayerDown,
+    SpeedUp,
+    SlowDown,
+    EatGlob,
     Exit
 }
 
@@ -19,6 +22,9 @@ public static class InputManager
         {ConsoleKey.RightArrow , InputAction.MovePlayerRight},
         {ConsoleKey.UpArrow , InputAction.MovePlayerUp},
         {ConsoleKey.DownArrow , InputAction.MovePlayerDown},
+        {ConsoleKey.OemPlus , InputAction.SpeedUp},
+        {ConsoleKey.Oem4 , InputAction.SlowDown},
+        {ConsoleKey.Spacebar , InputAction.EatGlob},
         {ConsoleKey.Escape , InputAction.Exit}
     };
 
