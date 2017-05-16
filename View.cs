@@ -9,19 +9,21 @@ public class View
 
     public View()
     {
-        InitDisplay();
         World = new World(this);
+        InitDisplay();
     }
 
     public void Run()
     {
-        while (true)
+        World.Init();
+         while (true)
         {
             var key = Console.ReadKey(true);
             var action = InputManager.GetInputAction(key);
             if (action == InputAction.Exit) break;
             World.ProcessInput(action);
         }
+        // todo stop timer
         Console.SetCursorPosition(0, World.Size + 2);
         Console.WriteLine("Stopped");
     }

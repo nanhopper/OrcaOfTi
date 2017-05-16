@@ -16,24 +16,4 @@ public static class Extentions
                 throw new NotSupportedException();
         }
     }
-
-    public static Entity LeftNeighbor(this Entity[][] matrix, Entity entity)
-    {
-        return (entity.Column == 0) ? null : matrix[entity.Row][entity.Column -1];
-    }
-
-    public static Entity RightNeighbor(this Entity[][] matrix, Entity entity)
-    {
-        return (entity.Column == matrix[0].Length-1) ? null : matrix[entity.Row][entity.Column +1];
-    }
-
-    public static Entity TopNeighbor(this Entity[][] matrix, Entity entity)
-    {
-        return (entity.Row == 0) ? null : matrix[entity.Row-1][entity.Column];
-    }
-
-    public static Entity BottomNeighbor(this Entity[][] matrix, Entity entity)
-    {
-        return (entity.Column == matrix.Length -1) ? null : matrix[entity.Row+1][entity.Column];
-    }
 }

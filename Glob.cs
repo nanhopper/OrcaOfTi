@@ -10,10 +10,6 @@ public class Glob : Entity
         Action.MoveDown
     };
 
-    public Glob(int column, int row) : base(column, row)
-    {
-    }
-
     public override char Char { get { return 'O';}}
 
     public override Action GetNextIntendedAction()

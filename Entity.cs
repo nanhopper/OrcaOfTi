@@ -1,15 +1,13 @@
-using System;
-
 public abstract class Entity
 {
     public int Column { get; protected set;}
     public int Row { get; protected set;}
     public abstract char Char{get;} 
 
-    public Entity(int column, int row)
+    public void MoveTo(int row, int column)
     {
-        Column = column;
         Row = row;
+        Column = column;
     }
 
     public void Move(int deltaX, int deltaY)
